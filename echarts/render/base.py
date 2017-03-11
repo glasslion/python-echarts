@@ -14,7 +14,6 @@ class BaseChart(object):
             self.axes = None
         self.options = self.aggregate_options()
 
-
     def aggregate_options(self):
         """
         Return [echat options](http://echarts.baidu.com/option.html) as a dict
@@ -73,7 +72,10 @@ class BaseChart(object):
         }
 
     def get_series(self):
-        return [self.get_series_i(i, axis,) for i, axis in enumerate(self.data_source.as_rows())]
+        return [
+            self.get_series_i(i, axis,)
+            for i, axis in enumerate(self.data_source.as_rows())
+        ]
 
     def Axes(self, value):
         self.axes = value
@@ -81,8 +83,10 @@ class BaseChart(object):
 
     def xAxis(self, data=None, **kwargs):
         """
+        Usage
         Short form: chart.xAxis([2015, 2016, 2017])
-        Full form: chart.xAxis(data=[2015, 2016, 2017], type='category', name='Year')
+        Long form:
+        chart.xAxis(data=[2015, 2016, 2017], type='category', name='Year')
         """
         kwargs['data'] = data
         self.options['xAxis'].update(kwargs)
@@ -142,7 +146,8 @@ class Pie(BaseChart):
             'type': self.type,
             'radius': '55%',
             'data': [
-                {'value':val,  'name':self.axes[i]} for i, val in enumerate(self.data_source.as_rows())
+                {'value': val,  'name': self.axes[i]}
+                for i, val in enumerate(self.data_source.as_rows())
             ],
 
         }]
