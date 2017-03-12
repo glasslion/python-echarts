@@ -8,7 +8,10 @@ class SimpleDataSource(BaseDataSource):
     def __init__(self, rows=None, series=None):
         checks = [rows is None, series is None]
         if all(checks) or not any(checks):
-            raise ValueError("The `rows` and `series` parameters are incompatible.")
+            raise ValueError(
+                "The `rows` and `series` arguments are incompatible."
+                "One and only one of them should be specified."
+            )
 
         if rows is not None:
             self.data = rows

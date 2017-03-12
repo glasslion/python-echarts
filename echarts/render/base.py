@@ -5,6 +5,8 @@ from ..utils import transpose
 
 
 class BaseChart(object):
+    type = None
+
     def __init__(self, data_source, title="Chart", axes=None):
         self.data_source = data_source
         self.title = title
@@ -147,7 +149,7 @@ class Pie(BaseChart):
 
     def get_series_array(self):
         series_arr = transpose(self.data_source.data)
-        series = self.data_source.data`[self.series_index]
+        series = series_arr[self.series_index]
 
         return [{
             'type': self.type,
