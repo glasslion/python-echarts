@@ -5,6 +5,7 @@ from .base import BaseDataSource
 
 class ModelDataSource(BaseDataSource):
     """
+    Data source for Django models(queryset)
     """
     def __init__(self, queryset, fields):
         self.queryset = queryset

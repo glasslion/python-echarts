@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+from ..utils import transpose
+
 
 class BaseChart(object):
     def __init__(self, data_source, title="Chart", axes=None):
@@ -26,7 +28,7 @@ class BaseChart(object):
         options['yAxis'] = self.get_yAxis()
         options['tooltip'] = self.get_tooltip()
         options['toolbox'] = self.get_toolbox()
-        options['series'] = self.get_series()
+        options['series'] = self.get_series_array()
         return options
 
     def get_title(self):
@@ -71,12 +73,6 @@ class BaseChart(object):
             }
         }
 
-    def get_series(self):
-        return [
-            self.get_series_i(i, axis,)
-            for i, axis in enumerate(self.data_source.as_table())
-        ]
-
     def Axes(self, value):
         self.axes = value
         return self
@@ -110,13 +106,20 @@ class BaseChart(object):
         self.options['toolbox'].update(kwargs)
         return self
 
-    def get_series_i(self, i, axis):
+    def get_series_array(self):
+        series_arr = transpose(self.data_source.data)
+        return [
+            self.get_series(idx, series)
+            for idx, series in enumerate(series_arr)
+        ]
+
+    def get_series(self, idx, series):
         ret = {
-            'data': axis,
+            'data': series,
             'type': self.type,
         }
         if self.axes:
-            ret['name'] = self.axes[i]
+            ret['name'] = self.axes[idx]
         return ret
 
 
@@ -129,7 +132,7 @@ class Line(BaseChart):
 
 
 class Pie(BaseChart):
-    col_index = 0
+    series_index = 0
     type = 'pie'
 
     def get_xAxis(self):
@@ -142,16 +145,19 @@ class Pie(BaseChart):
             'show': False,
         }
 
-    def get_series(self):
+    def get_series_array(self):
+        series_arr = transpose(self.data_source.data)
+        series = self.data_source.data`[self.series_index]
+
         return [{
             'type': self.type,
             'radius': '55%',
             'data': [
                 {
-                    'value': row[self.col_index],
+                    'value': val,
                     'name': self.axes[i],
                 }
-                for i, row in enumerate(self.data_source.as_table())
+                for i, val in enumerate(series)
             ],
 
         }]
