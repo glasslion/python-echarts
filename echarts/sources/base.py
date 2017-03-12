@@ -3,6 +3,8 @@ from __future__ import absolute_import, unicode_literals
 
 
 class BaseDataSource(object):
+    def as_table(self):
+        return [row for row in self.data]
 
     @property
     def T(self):
