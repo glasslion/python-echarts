@@ -6,7 +6,7 @@ from .base import BaseDataSource
 class ModelDataSource(BaseDataSource):
     """
     """
-    def __init__(self, queryset, fields=None):
+    def __init__(self, queryset, fields):
         self.queryset = queryset
         self.fields = fields
         self.data = self.normalize_data()

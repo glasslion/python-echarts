@@ -4,5 +4,5 @@ from .base import BaseDataSource
 
 
 class SimpleDataSource(BaseDataSource):
-    def as_rows(self):
+    def as_table(self):
         return [row for row in self.data]

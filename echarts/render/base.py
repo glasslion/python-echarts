@@ -74,7 +74,7 @@ class BaseChart(object):
     def get_series(self):
         return [
             self.get_series_i(i, axis,)
-            for i, axis in enumerate(self.data_source.as_rows())
+            for i, axis in enumerate(self.data_source.as_table())
         ]
 
     def Axes(self, value):
@@ -129,6 +129,7 @@ class Line(BaseChart):
 
 
 class Pie(BaseChart):
+    col_index = 0
     type = 'pie'
 
     def get_xAxis(self):
@@ -146,8 +147,11 @@ class Pie(BaseChart):
             'type': self.type,
             'radius': '55%',
             'data': [
-                {'value': val,  'name': self.axes[i]}
-                for i, val in enumerate(self.data_source.as_rows())
+                {
+                    'value': row[self.col_index],
+                    'name': self.axes[i],
+                }
+                for i, row in enumerate(self.data_source.as_table())
             ],
 
         }]
