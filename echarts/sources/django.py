@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from .base import BaseDataSource
 
 
-class DjangoModelDataSource(BaseDataSource):
+class ModelDataSource(BaseDataSource):
     """
     """
     def __init__(self, queryset, fields=None):
