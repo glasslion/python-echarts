@@ -42,14 +42,16 @@ class BaseChart(object):
     def get_legend(self):
         return {
             'bottom': 10,
-            'data': self.axes or [],
+            'data': self.axes,
         }
 
     def get_grid(self):
         return {}
 
     def get_xAxis(self):
-        return {}
+        return {
+            'data': self.data_source.indices
+        }
 
     def get_yAxis(self):
         return {}
@@ -173,4 +175,10 @@ class Pie(BaseChart):
                 },
                 'saveAsImage': {}
             }
+        }
+
+    def get_legend(self):
+        return {
+            'bottom': 10,
+            'data': self.data_source.indices,
         }
