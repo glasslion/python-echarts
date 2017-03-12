@@ -159,7 +159,7 @@ class Pie(BaseChart):
             'data': [
                 {
                     'value': val,
-                    'name': self.axes[i],
+                    'name': self.indices[i],
                 }
                 for i, val in enumerate(series)
             ],
