@@ -137,6 +137,8 @@ class Line(BaseChart):
 
 class Pie(BaseChart):
     series_index = 0
+    radius = '55%'
+
     type = 'pie'
 
     def get_xAxis(self):
@@ -155,7 +157,7 @@ class Pie(BaseChart):
 
         return [{
             'type': self.type,
-            'radius': '55%',
+            'radius': self.radius,
             'data': [
                 {
                     'value': val,

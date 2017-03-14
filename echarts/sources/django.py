@@ -32,7 +32,11 @@ class ModelDataSource(BaseDataSource):
         return data
 
     def get_field_value(self, row, field):
-        value = getattr(row, field)
+        if isinstance(row, dict):
+            # Queryset.vales() return a sequence of dicts
+            value = row[field]
+        else:
+            value = getattr(row, field)
         if callable(value):
             return value()
         else:
